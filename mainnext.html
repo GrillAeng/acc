@@ -1,0 +1,136 @@
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/daisyui@5"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .carousel {
+      width: 100%;
+      height: 100dvh;
+    }
+
+    .carousel-item {
+      width: 100%;
+      height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="carousel">
+
+    <!-- Slide 1 -->
+    <div id="slide1" class="carousel-item relative">
+
+      <img
+        src="img/main1.jpg"
+        alt="Slide 1"
+      />
+
+      <div class="absolute inset-y-0 left-3 right-3 flex items-center justify-between">
+
+        <a
+          href="#slide2"
+          class="btn btn-circle btn-sm sm:btn-md"
+        >
+          ❯
+        </a>
+      </div>
+
+    </div>
+
+
+    <!-- Slide 2 -->
+    <div id="slide2" class="carousel-item relative">
+
+      <img
+        src="img/main2.jpg"
+        alt="Slide 2"
+      />
+
+      <div class="absolute inset-y-0 left-3 right-3 flex items-center justify-between">
+        <a
+          href="#slide1"
+          class="btn btn-circle btn-sm sm:btn-md"
+        >
+          ❮
+        </a>
+
+        <a
+          href="#slide3"
+          class="btn btn-circle btn-sm sm:btn-md"
+        >
+          ❯
+        </a>
+      </div>
+
+    </div>
+
+
+    <!-- Slide 3 -->
+    <div id="slide3" class="carousel-item relative">
+
+      <img
+        src="img/main3.jpg"
+        alt="Slide 3"
+      />
+
+      <div class="absolute inset-y-0 left-3 right-3 flex items-center justify-between">
+        <a
+          href="#slide2"
+          class="btn btn-circle btn-sm sm:btn-md"
+        >
+          ❮
+        </a>
+
+        <a
+          href="Quiz.html"
+          class="btn btn-circle btn-sm sm:btn-md"
+        >
+          ❯
+        </a>
+      </div>
+      
+    </div>
+
+  </div>
+
+  
+
+</body>
+</html>
+```

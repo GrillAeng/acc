@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <!-- DaisyUI 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/daisyui@5"
+    rel="stylesheet"
+    type="text/css"
+  >
+
+  <!-- Tailwind CSS browser build -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <title>Style Quiz</title>
+
+  <style>
+    :root {
+      --quiz-pink: #f47788;
+      --quiz-pink-dark: #ed687a;
+      --quiz-bg: #fff7f7;
+      --quiz-border: #ead5d8;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--quiz-bg);
+    }
+
+    body {
+      overflow-x: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    .quiz-serif {
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .quiz-card {
+      border: 1.5px solid var(--quiz-border);
+      background: rgba(255,255,255,.2);
+    }
+
+    .quiz-selected {
+      background: var(--quiz-pink) !important;
+      border-color: var(--quiz-pink) !important;
+      color: white !important;
+    }
+
+    .quiz-check {
+      display: none;
+    }
+
+    .quiz-selected .quiz-check {
+      display: flex;
+    }
+
+    .sparkle {
+      position: absolute;
+      color: #efc3ca;
+      pointer-events: none;
+    }
+
+    /* Simple body silhouettes, so the page works without extra image files. */
+    .body-shape {
+      position: relative;
+      width: 54px;
+      height: 108px;
+      margin: auto;
+    }
+
+    .body-shape::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 18px;
+      width: 18px;
+      height: 20px;
+      border-radius: 50%;
+      background: #d99b9e;
+    }
+
+    .body-shape::after {
+      content: "";
+      position: absolute;
+      top: 17px;
+      left: 11px;
+      width: 32px;
+      height: 62px;
+      border-radius: 45% 45% 35% 35%;
+      background: #e9a9aa;
+      box-shadow:
+        -8px 30px 0 -5px #e9a9aa,
+        8px 30px 0 -5px #e9a9aa,
+        -6px 72px 0 -7px #d99b9e,
+        6px 72px 0 -7px #d99b9e;
+    }
+
+    @media (max-width: 640px) {
+      .body-shape {
+        transform: scale(.82);
+        transform-origin: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="mx-auto w-full max-w-4xl px-3 py-3 sm:px-5 sm:py-5 md:px-8">
+
+    <!-- Top navigation -->
+    <header class="flex h-12 items-center justify-between sm:h-14">
+      <button
+        type="button"
+        class="btn btn-ghost btn-circle text-4xl font-light"
+        aria-label="Back"
+        onclick="goToIndex()"
+      >
+        ‹
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-ghost btn-sm text-base font-normal"
+        onclick="goToIndex()"
+      >
+        Skip
+      </button>
+    </header>
+
+    <!-- Progress -->
+    <div class="flex justify-center gap-2 py-3 sm:py-5" aria-label="Quiz progress">
+      <span class="h-1.5 w-5 rounded-full bg-[#f47788]"></span>
+      <span class="h-1.5 w-5 rounded-full bg-[#f1dfe2]"></span>
+      <span class="h-1.5 w-5 rounded-full bg-[#f1dfe2]"></span>
+      <span class="h-1.5 w-5 rounded-full bg-[#f1dfe2]"></span>
+      <span class="h-1.5 w-5 rounded-full bg-[#f1dfe2]"></span>
+    </div>
+
+    <!-- Hero -->
+    <section class="relative mb-7 text-center sm:mb-9">
+      <span class="sparkle left-[8%] top-8 text-xl sm:left-[16%]">✦</span>
+      <span class="sparkle right-[8%] top-20 text-xl sm:right-[15%]">✦</span>
+
+      <h1 class="quiz-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+        Style Quiz <span class="text-2xl font-normal text-[#efabb6] sm:text-3xl">♡</span>
+      </h1>
+
+      <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-[#514b4d] sm:text-base md:text-lg">
+        Let’s get to know your style<br>
+        so we can create the perfect looks for you.
+      </p>
+    </section>
+
+    <!-- 1. Gender -->
+    <section class="mb-6">
+      <h2 class="mb-3 text-lg font-medium sm:text-xl">
+        1. What’s your gender?
+      </h2>
+
+      <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
+        <button
+          type="button"
+          class="quiz-card quiz-option quiz-selected relative min-h-24 rounded-2xl border p-3 text-center transition hover:border-[#efa0aa]"
+          onclick="selectOne(this, 'gender')"
+        >
+          <span class="quiz-check absolute right-2 top-2 size-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#f47788]">✓</span>
+          <span class="block text-3xl leading-none sm:text-4xl">♀</span>
+          <span class="mt-2 block text-sm sm:text-base">Female</span>
+        </button>
+
+        <button
+          type="button"
+          class="quiz-card quiz-option relative min-h-24 rounded-2xl border p-3 text-center transition hover:border-[#efa0aa]"
+          onclick="selectOne(this, 'gender')"
+        >
+          <span class="quiz-check absolute right-2 top-2 size-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#f47788]">✓</span>
+          <span class="block text-3xl leading-none text-[#777] sm:text-4xl">♂</span>
+          <span class="mt-2 block text-sm sm:text-base">Male</span>
+        </button>
+
+        <button
+          type="button"
+          class="quiz-card quiz-option relative min-h-24 rounded-2xl border p-3 text-center transition hover:border-[#efa0aa]"
+          onclick="selectOne(this, 'gender')"
+        >
+          <span class="quiz-check absolute right-2 top-2 size-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#f47788]">✓</span>
+          <span class="block text-3xl leading-none text-[#777] sm:text-4xl">⚥</span>
+          <span class="mt-2 block text-sm sm:text-base">Non-binary</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. Body -->
+    <section class="mb-6">
+      <h2 class="mb-3 text-lg font-medium sm:text-xl">
+        2. What’s your body type? <span class="text-sm text-gray-400">ⓘ</span>
+      </h2>
+
+      <div class="grid grid-cols-5 gap-1.5 sm:gap-2">
+        <button type="button" class="quiz-card quiz-option relative min-h-36 rounded-2xl border p-1.5 text-center sm:min-h-44" onclick="selectOne(this, 'body')">
+          <span class="quiz-check absolute right-1.5 top-1.5 z-10 size-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#f47788]">✓</span>
+          <img src="img//petite.png" alt="Petite body type" class="mx-auto h-28 w-full object-contain sm:h-32">
+          <span class="block text-xs sm:text-sm">Petite</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-option quiz-selected relative min-h-36 rounded-2xl border p-1.5 text-center sm:min-h-44" onclick="selectOne(this, 'body')">
+          <span class="quiz-check absolute right-1.5 top-1.5 z-10 size-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#f47788]">✓</span>
+          <img src="img//slim.png" alt="Slim body type" class="mx-auto h-28 w-full object-contain sm:h-32">
+          <span class="block text-xs sm:text-sm">Slim</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-option relative min-h-36 rounded-2xl border p-1.5 text-center sm:min-h-44" onclick="selectOne(this, 'body')">
+          <span class="quiz-check absolute right-1.5 top-1.5 z-10 size-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#f47788]">✓</span>
+          <img src="img//athletic.png" alt="Athletic body type" class="mx-auto h-28 w-full object-contain sm:h-32">
+          <span class="block text-xs sm:text-sm">Athletic</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-option relative min-h-36 rounded-2xl border p-1.5 text-center sm:min-h-44" onclick="selectOne(this, 'body')">
+          <span class="quiz-check absolute right-1.5 top-1.5 z-10 size-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#f47788]">✓</span>
+          <img src="img//curvy.png" alt="Curvy body type" class="mx-auto h-28 w-full object-contain sm:h-32">
+          <span class="block text-xs sm:text-sm">Curvy</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-option relative min-h-36 rounded-2xl border p-1.5 text-center sm:min-h-44" onclick="selectOne(this, 'body')">
+          <span class="quiz-check absolute right-1.5 top-1.5 z-10 size-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#f47788]">✓</span>
+          <img src="img//fullfigured.png" alt="Full-figured body type" class="mx-auto h-28 w-full object-contain sm:h-32">
+          <span class="block text-xs sm:text-sm">Full-figured</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. Styles -->
+    <section class="mb-6">
+      <h2 class="mb-3 text-lg font-medium sm:text-xl">
+        3. What styles do you like?
+        <span class="text-sm text-gray-500">(Choose up to 3)</span>
+      </h2>
+
+      <div class="grid grid-cols-3 gap-2 sm:gap-2.5">
+        <button type="button" class="quiz-card quiz-style quiz-selected relative flex min-h-14 items-center gap-2 rounded-2xl border px-2.5 py-2 text-left sm:px-3" onclick="toggleStyle(this)">
+          <span class="quiz-check absolute right-1.5 top-1.5 size-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#f47788]">✓</span>
+          <span class="text-xl sm:text-2xl">♧</span><span class="text-xs sm:text-sm">Streetwear</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-style quiz-selected relative flex min-h-14 items-center gap-2 rounded-2xl border px-2.5 py-2 text-left sm:px-3" onclick="toggleStyle(this)">
+          <span class="quiz-check absolute right-1.5 top-1.5 size-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#f47788]">✓</span>
+          <span class="text-xl sm:text-2xl">♡</span><span class="text-xs sm:text-sm">Y2K</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-style relative flex min-h-14 items-center gap-2 rounded-2xl border px-2.5 py-2 text-left sm:px-3" onclick="toggleStyle(this)">
+          <span class="quiz-check absolute right-1.5 top-1.5 size-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#f47788]">✓</span>
+          <span class="text-xl sm:text-2xl">♧</span><span class="text-xs sm:text-sm">Minimal</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-style relative flex min-h-14 items-center gap-2 rounded-2xl border px-2.5 py-2 text-left sm:px-3" onclick="toggleStyle(this)">
+          <span class="quiz-check absolute right-1.5 top-1.5 size-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#f47788]">✓</span>
+          <span class="text-xl sm:text-2xl">▣</span><span class="text-xs sm:text-sm">Smart Casual</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-style relative flex min-h-14 items-center gap-2 rounded-2xl border px-2.5 py-2 text-left sm:px-3" onclick="toggleStyle(this)">
+          <span class="quiz-check absolute right-1.5 top-1.5 size-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#f47788]">✓</span>
+          <span class="text-xl sm:text-2xl">♧</span><span class="text-xs sm:text-sm">Romantic</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-style relative flex min-h-14 items-center gap-2 rounded-2xl border px-2.5 py-2 text-left sm:px-3" onclick="toggleStyle(this)">
+          <span class="quiz-check absolute right-1.5 top-1.5 size-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#f47788]">✓</span>
+          <span class="text-xl sm:text-2xl">▢</span><span class="text-xs sm:text-sm">Vintage</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-style relative flex min-h-14 items-center gap-2 rounded-2xl border px-2.5 py-2 text-left sm:px-3" onclick="toggleStyle(this)">
+          <span class="quiz-check absolute right-1.5 top-1.5 size-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#f47788]">✓</span>
+          <span class="text-xl sm:text-2xl">✧</span><span class="text-xs sm:text-sm">Korean</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-style relative flex min-h-14 items-center gap-2 rounded-2xl border px-2.5 py-2 text-left sm:px-3" onclick="toggleStyle(this)">
+          <span class="quiz-check absolute right-1.5 top-1.5 size-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#f47788]">✓</span>
+          <span class="text-xl sm:text-2xl">✿</span><span class="text-xs sm:text-sm">Soft Girl</span>
+        </button>
+
+        <button type="button" class="quiz-card quiz-style relative flex min-h-14 items-center gap-2 rounded-2xl border px-2.5 py-2 text-left sm:px-3" onclick="toggleStyle(this)">
+          <span class="quiz-check absolute right-1.5 top-1.5 size-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#f47788]">✓</span>
+          <span class="text-xl sm:text-2xl">•••</span><span class="text-xs sm:text-sm">Other</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 4. Colors -->
+    <section class="mb-6">
+      <h2 class="mb-4 text-lg font-medium sm:text-xl">
+        4. What colors do you love?
+      </h2>
+
+      <div class="flex items-center justify-around gap-2 px-1">
+        <button class="color-choice relative size-10 rounded-full bg-[#f17888] ring-4 ring-[#f9d9dd] sm:size-12" data-color="#f17888" aria-label="Pink"></button>
+        <button class="color-choice size-10 rounded-full bg-[#e7b38d] sm:size-12" data-color="#e7b38d" aria-label="Peach"></button>
+        <button class="color-choice size-10 rounded-full bg-[#eee2d2] sm:size-12" data-color="#eee2d2" aria-label="Cream"></button>
+        <button class="color-choice size-10 rounded-full bg-[#aec7e6] sm:size-12" data-color="#aec7e6" aria-label="Light blue"></button>
+        <button class="color-choice size-10 rounded-full bg-[#718ba5] sm:size-12" data-color="#718ba5" aria-label="Blue"></button>
+        <button class="color-choice size-10 rounded-full bg-[#78816b] sm:size-12" data-color="#78816b" aria-label="Olive"></button>
+        <button class="color-choice size-10 rounded-full bg-[#373535] sm:size-12" data-color="#373535" aria-label="Black"></button>
+      </div>
+    </section>
+
+    <!-- 5. Goal -->
+    <section class="mb-5">
+      <h2 class="mb-3 text-lg font-medium sm:text-xl">
+        5. What’s your style goal?
+        <span class="text-sm text-gray-500">(Optional)</span>
+      </h2>
+
+      <div class="relative">
+        <textarea
+          id="goal"
+          maxlength="100"
+          class="textarea textarea-bordered h-28 w-full resize-none rounded-2xl border-[#ead5d8] bg-transparent p-4 pb-8 text-sm leading-relaxed outline-none focus:border-[#f0a1ab] sm:text-base"
+          placeholder="e.g. Look more put together, Try new styles,
+Feel more confident..."
+        ></textarea>
+
+        <span id="counter" class="absolute bottom-3 right-4 text-xs text-gray-500">0/100</span>
+      </div>
+    </section>
+
+    <!-- Continue -->
+    <button
+      type="button"
+      class="btn h-14 w-full rounded-full border-0 bg-[#f47788] text-lg font-normal text-white shadow-md hover:bg-[#ed687a] sm:h-16 sm:text-xl"
+      onclick="goToIndex()"
+    >
+      Continue <span class="ml-2 text-2xl">→</span>
+    </button>
+
+  </main>
+
+  <script>
+    function goToIndex() {
+      window.location.href = "index.html";
+    }
+
+    function selectOne(button, group) {
+      const selector =
+        group === "gender"
+          ? ".quiz-option"
+          : ".quiz-option";
+
+      const parent = button.parentElement;
+      parent.querySelectorAll(selector).forEach(el => {
+        el.classList.remove("quiz-selected");
+      });
+
+      button.classList.add("quiz-selected");
+    }
+
+    function toggleStyle(button) {
+      const selected = document.querySelectorAll(".quiz-style.quiz-selected");
+
+      if (button.classList.contains("quiz-selected")) {
+        button.classList.remove("quiz-selected");
+        return;
+      }
+
+      if (selected.length >= 3) {
+        return;
+      }
+
+      button.classList.add("quiz-selected");
+    }
+
+    document.querySelectorAll(".color-choice").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".color-choice").forEach(el => {
+          el.classList.remove("ring-4", "ring-[#f9d9dd]");
+        });
+
+        button.classList.add("ring-4", "ring-[#f9d9dd]");
+
+        const oldCheck = document.querySelector(".color-choice .color-check");
+        if (oldCheck) oldCheck.remove();
+
+        const check = document.createElement("span");
+        check.className = "color-check absolute inset-0 grid place-items-center text-2xl font-bold text-white";
+        check.textContent = "✓";
+        button.appendChild(check);
+      });
+    });
+
+    const goal = document.getElementById("goal");
+    const counter = document.getElementById("counter");
+
+    goal.addEventListener("input", () => {
+      counter.textContent = `${goal.value.length}/100`;
+    });
+  </script>
+
+</body>
+</html>
